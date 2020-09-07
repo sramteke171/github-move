@@ -43,3 +43,9 @@ function Home() {
 
 export default Home;
 ```
+
+<br>
+
+## Additional Resources
+
+- [Heroku React Deploy](https://blog.heroku.com/deploying-react-with-zero-configuration#create-and-deploy-a-react-app-in-two-minutes)
