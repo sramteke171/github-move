@@ -16,7 +16,6 @@ function App(props) {
     async function getArtists() {
       let axiosArtists = await axios(`${backendUrl}/artists`);
       setArtists(axiosArtists.data.allArtists);
-      console.log(axiosArtists);
     }
     getArtists();
   }, []);
@@ -33,13 +32,48 @@ function App(props) {
     );
 
     let data = response.data;
+    console.log(data);
 
     await setArtists(
       artists.map((artist) => {
         if (artist.id === data.song.artistId) {
-          artist.Songs.push(data.song);
+          // artist.Songs.push(data.song);
+          artist.Songs = [...artist.Songs, data.song];
         }
         return artist;
+      })
+    );
+  };
+
+  const createArtist = async (e) => {
+    e.preventDefault();
+    let response = await axios.post(`${backendUrl}/artists/`, {
+      name: e.target.name.value,
+    });
+
+    let newArtist = response.data.newArtist;
+
+    await setArtists([...artists, newArtist]);
+  };
+
+  const updateArtist = async (e) => {
+    e.preventDefault();
+    let artistId = parseInt(e.target.artistId.value);
+    let response = await axios.put(`${backendUrl}/artists/${artistId}`, {
+      name: e.target.name.value,
+      artistId: artistId,
+    });
+
+    let updatedArtist = response.data.artist;
+
+    await setArtists(
+      artists.map((artist, index) => {
+        console.log(updatedArtist, artist);
+        if (artist.id === updatedArtist.id) {
+          return updatedArtist;
+        } else {
+          return artist;
+        }
       })
     );
   };
@@ -49,7 +83,6 @@ function App(props) {
       <nav>
         <h4>MUSE!</h4>
         <Link to="/">Home</Link>
-        <Link to="/artists/new">Create a New Artist</Link>
         <Link to="/artists">All Artists</Link>
       </nav>
       <main>
@@ -58,7 +91,12 @@ function App(props) {
           <Route
             exact
             path="/artists"
-            component={() => <AllArtists artists={artists} />}
+            component={() => (
+              <AllArtists
+                artists={artists}
+                createNewArtist={(e) => createArtist(e)}
+              />
+            )}
           />
           <Route
             exact
@@ -68,6 +106,7 @@ function App(props) {
                 {...routerProps}
                 artists={artists}
                 createNewSong={(e) => createSong(e)}
+                updateArtist={(e) => updateArtist(e)}
               />
             )}
           />

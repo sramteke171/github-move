@@ -9,6 +9,16 @@ export default function ArtistDetail(props) {
   return (
     <>
       <h1>Details for {artistDetail.name}</h1>
+
+      <h3>Edit Form</h3>
+      <form onSubmit={(e) => props.updateArtist(e)}>
+        <input type="text" name="name" placeholder={artistDetail.name} />
+        <input type="hidden" name="artistId" value={artistDetail.id} />
+        <input type="submit" value="Update Artist" />
+      </form>
+
+      <br />
+      <br />
       <form onSubmit={(e) => props.createNewSong(e)}>
         <legend>Add a New {artistDetail.name} Song</legend>
         Title: <input type="text" name="title" />
