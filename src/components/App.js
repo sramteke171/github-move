@@ -8,7 +8,8 @@ import ArtistDetail from "./ArtistDetail";
 const backendUrl =
   process.env.REACT_APP_BACKEND_URL || "http://localhost:3000/api";
 
-function App() {
+function App(props) {
+  console.log(props);
   const [artists, setArtists] = useState([]);
 
   useEffect(() => {
@@ -19,6 +20,29 @@ function App() {
     }
     getArtists();
   }, []);
+
+  const createSong = async (e) => {
+    e.preventDefault();
+    let artistId = parseInt(e.target.artistId.value);
+    let response = await axios.post(
+      `${backendUrl}/artists/${artistId}/newsong`,
+      {
+        title: e.target.title.value,
+        artistId: artistId,
+      }
+    );
+
+    let data = response.data;
+
+    await setArtists(
+      artists.map((artist) => {
+        if (artist.id === data.song.artistId) {
+          artist.Songs.push(data.song);
+        }
+        return artist;
+      })
+    );
+  };
 
   return (
     <div className="App">
@@ -40,7 +64,11 @@ function App() {
             exact
             path="/artists/:id"
             component={(routerProps) => (
-              <ArtistDetail {...routerProps} artists={artists} />
+              <ArtistDetail
+                {...routerProps}
+                artists={artists}
+                createNewSong={(e) => createSong(e)}
+              />
             )}
           />
           <Route path="/*" render={() => <Redirect to="/" />} />
