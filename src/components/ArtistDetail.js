@@ -6,9 +6,17 @@ export default function ArtistDetail(props) {
     return artist.id === parseInt(props.match.params.id);
   });
 
+  const showSongs = () => {
+    if (artistDetail.Songs) {
+      return artistDetail.Songs.map((song) => {
+        return <li key={song.id}>{song.title}</li>;
+      });
+    }
+  };
+
   return (
     <>
-      <h1>Details for {artistDetail.name}</h1>
+      <h1>{artistDetail.name} Details</h1>
 
       <h3>Edit Form</h3>
       <form onSubmit={(e) => props.updateArtist(e)}>
@@ -19,18 +27,13 @@ export default function ArtistDetail(props) {
 
       <br />
       <br />
-      <form onSubmit={(e) => props.createNewSong(e)}>
-        <legend>Add a New {artistDetail.name} Song</legend>
-        Title: <input type="text" name="title" />
+      <h3>Add a New {artistDetail.name} Song</h3>
+      <form onSubmit={(e) => props.createSong(e)}>
+        <input type="text" name="title" placeholder="Song Title" />
         <input type="hidden" name="artistId" value={artistDetail.id} />
-        <br />
-        <input type="submit" value="New Song" />
+        <input type="submit" value="New Song Title" />
       </form>
-      <ul>
-        {artistDetail.Songs.map((song) => {
-          return <li key={song.id}>{song.title}</li>;
-        })}
-      </ul>
+      <ol>{showSongs()}</ol>
     </>
   );
 }

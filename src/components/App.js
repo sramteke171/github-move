@@ -8,8 +8,7 @@ import ArtistDetail from "./ArtistDetail";
 const backendUrl =
   process.env.REACT_APP_BACKEND_URL || "http://localhost:3000/api";
 
-function App(props) {
-  console.log(props);
+function App() {
   const [artists, setArtists] = useState([]);
 
   useEffect(() => {
@@ -56,6 +55,18 @@ function App(props) {
     await setArtists([...artists, newArtist]);
   };
 
+  const deleteArtist = async (e) => {
+    e.preventDefault();
+    let artistId = parseInt(e.target.id);
+    let arrayIndex = e.target.getAttribute("arrayindex");
+
+    await axios.delete(`${backendUrl}/artists/${artistId}`);
+
+    const artistsCopy = [...artists];
+    artistsCopy.splice(arrayIndex, 1);
+    await setArtists([...artistsCopy]);
+  };
+
   const updateArtist = async (e) => {
     e.preventDefault();
     let artistId = parseInt(e.target.artistId.value);
@@ -68,7 +79,6 @@ function App(props) {
 
     await setArtists(
       artists.map((artist, index) => {
-        console.log(updatedArtist, artist);
         if (artist.id === updatedArtist.id) {
           return updatedArtist;
         } else {
@@ -94,7 +104,8 @@ function App(props) {
             component={() => (
               <AllArtists
                 artists={artists}
-                createNewArtist={(e) => createArtist(e)}
+                createArtist={(e) => createArtist(e)}
+                deleteArtist={(e) => deleteArtist(e)}
               />
             )}
           />
@@ -105,7 +116,7 @@ function App(props) {
               <ArtistDetail
                 {...routerProps}
                 artists={artists}
-                createNewSong={(e) => createSong(e)}
+                createSong={(e) => createSong(e)}
                 updateArtist={(e) => updateArtist(e)}
               />
             )}
