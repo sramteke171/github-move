@@ -22,6 +22,7 @@ Yesterday we built a Node/Express API only backend app that serves JSON data. To
 	
 1. Make sure that Postgres is running	
 1. Make sure you have your Node/Express API app running with `nodemon` so that we can make requests
+	- If your backend isn't working, you can use `https://muse-backend.herokuapp.com/` as your endpoint.
 
 
 <br>
