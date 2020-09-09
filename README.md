@@ -2,12 +2,16 @@
 
 Yesterday we built a Node/Express API only backend app that serves JSON data. Today we'll build a React app to consume it.
 
+<br>
+
 ## Solutions
 
 - Muse App front-end solution that uses hooks is on a `solution` branch in this repo.
 - [Muse App Express Backend Solution Branch](https://git.generalassemb.ly/jdr-0622/muse-express-api-backend-lesson/tree/solution)
 - [Heroku Deployed Muse Express API Backend](https://muse-backend.herokuapp.com/)
 - [Heroku Deployed Muse React Frontend](https://muse-react-frontend.herokuapp.com/)
+
+<br>
 
 ## Set-up
 
@@ -37,7 +41,7 @@ Create routes, links, and components for:
 
 <br>
 
-## App
+## App Component
 
 This component should...
 
@@ -56,7 +60,7 @@ This component should...
 
 <br>
 
-## All Artists
+## AllArtists Component
 
 This component should...
 
@@ -68,7 +72,7 @@ This component should...
 
 <br>
 
-## Artist Detail
+## Artist Detail Component
 
 This component should...
 
@@ -78,6 +82,7 @@ This component should...
 	- Use an `onSubmit()` event handler
 1. (Optional) Render a form to edit the artist name
 
+<br>
 
 ## Additional Resources
 
